@@ -1,0 +1,10 @@
+pip install selenium
+
+//
+
+from selenium import webdriver
+driver = webdriver.Firefox()
+url ="https://scholar.google.com/citations?user=f5FgCmIAAAAJ&hl=en"
+driver.get(url)
+elem1=driver.find_element_by_link_text("SHOW MORE")
+elem1.click()
