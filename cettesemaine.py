@@ -38,10 +38,17 @@ def write_csv(file):
 	os.chdir("/Users/juliencouture-senecal/Desktop/webscrape")
 	filename = str(file)+'.csv'
 	f = open(filename, "w")
-	headers = "Subject, Start Date, Start Time, End Time, Location\n"
+	headers = "Subject, Start Date, Start Time, End Date, End Time, Location\n"
 	f.write(headers)
-	for i in range(len(date_strip)):	
-		f.write(title_strip[i].strip('.') + ' by ' + name_strip[i] + ',' + date_strip[i][0] + ','+ date_strip[i][1] +','+location_strip[i] + "\n")
+	from datetime import datetime as dt
+	from datetime import timedelta as td
+	for i in range(len(date_strip)):
+		UsrInput = str(date_strip[i][1])
+		fmtString = '%I:%M %p'
+		myTime = dt.strptime(UsrInput, fmtString)
+		myTime += td(0,3600)
+		myTime = myTime.strftime(fmtString)
+		f.write(title_strip[i].strip('.') + ' by ' + name_strip[i] + ',' + date_strip[i][0] + ','+ date_strip[i][1] +','+ date_strip[i][0] + ',' + str(myTime) + ',' + location_strip[i] + ',' + "\n")
 	f.close()
 webscrape('http://cettesemaine.utoronto.ca/?q=thisweek')
 write_csv('cettesemaine')
